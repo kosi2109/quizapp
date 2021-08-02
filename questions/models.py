@@ -3,6 +3,14 @@ import uuid
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+class Answerer(models.Model):
+	user = models.OneToOneField(User,on_delete=models.CASCADE)
+	name = models.CharField(max_length=200,null=True)
+	email = models.CharField(max_length=200,null=True,blank=True)
+
+	def __str__(self):
+		return self.name
+
 
 class Category(models.Model):
 	ct_name = models.CharField(max_length=100,null=True)
@@ -19,6 +27,7 @@ class Category(models.Model):
 		return self.ct_name
 
 class QuestionGp(models.Model):
+	created_by = models.ForeignKey(Answerer,on_delete=models.CASCADE)
 	category = models.ForeignKey(Category, on_delete=models.CASCADE , null=True)
 	gp_name = models.CharField(max_length=100, null=True)
 	gp_slug = models.SlugField(editable = False ,unique=True,blank=True)
@@ -40,8 +49,8 @@ class Question(models.Model):
 	gp = models.ForeignKey(QuestionGp, on_delete=models.CASCADE,null=True)
 	question = models.TextField()
 	answer = models.IntegerField(null=True)
-	ans1 = models.CharField(max_length=100,null=True,blank=True)
-	ans2 = models.CharField(max_length=100,null=True,blank=True)
+	ans1 = models.CharField(max_length=100,null=True)
+	ans2 = models.CharField(max_length=100,null=True)
 	ans3 = models.CharField(max_length=100,null=True,blank=True)
 	ans4 = models.CharField(max_length=100,null=True,blank=True)
 	ans5 = models.CharField(max_length=100,null=True,blank=True)
@@ -62,13 +71,7 @@ class Question(models.Model):
 	def __str__(self):
 		return self.question
 
-class Answerer(models.Model):
-	user = models.OneToOneField(User,on_delete=models.CASCADE)
-	name = models.CharField(max_length=200,null=True)
-	email = models.CharField(max_length=200,null=True,blank=True)
 
-	def __str__(self):
-		return self.name
 
 class UserGpPoint(models.Model):
 	answerer = models.ForeignKey(Answerer,on_delete=models.CASCADE)

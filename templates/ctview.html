@@ -12,12 +12,14 @@
 				{% endfor %}
 			</ul>
 		</div>
-		
+		<div>
+			<button class="create-quiz-btn"><a href="{% url 'questions:createQuiz' %}">Create Quiz</a> </button>
+		</div>
 	</div>
 	
 		<div class="row">
 			{% for i in gp %}
-			<div class="col-12 px-5 mb-3">
+			<div class="col-md-6 col-12 px-5 mb-3">
 				<div class="gp-container shadow">
 					{{i}}
 					<a href="{% url 'questions:group' i.gp_slug %}">Try</a>

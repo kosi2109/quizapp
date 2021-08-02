@@ -1,10 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script type="text/javascript">
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+    
+  </script>
 
-{% if score %}
+
+<h2 class="text-center p-3 answered">{{gp.gp_name}} <br> (Upload by {{gp.created_by}})</h2>
+
+{% if request.user.answerer == gp.created_by %}
+	Edit
+{% endif %}
+
+{% if score >= 0 %}
 <h2 class="text-center p-3 answered">You have already answered this quiz !</h2>
 <h4 class="text-center scoretext">Your score <span class="score">{{score}}</span></h4>
+<div class="notic" id="notic">
+	<div>
+		<p>Your previous record will be deleted</p>
+		<button class="cross" id="cross">X</button>
+		<button class="okreanswer" id="okreanswer" data-action='reanswer'>OK</button>
+	</div>
+	
+</div>
 {% endif %}
 <div class="container-fluid m-0">
 	<div class="row p-3 m-0" style="width: 100% !important;">
@@ -24,8 +59,8 @@
 						<div class="col-12 mb-1">
 							<div class="select-container" >
 								<label>{{i.ans1}}</label>
-								<div>
-									<input id="q{{forloop.counter}}1" name="ans[{{forloop.counter}}]" type="checkbox" value=1>
+								<div required>
+									<input id="q{{forloop.counter}}1" name="ans[{{forloop.counter}}]" type="checkbox" value=1 required>
 									<span class="checkmark"></span>
 								</div>
 								
@@ -36,7 +71,7 @@
 							<div class="select-container">
 								<label>{{i.ans2}}</label>
 								<div>
-									<input id="q{{forloop.counter}}2" name="ans[{{forloop.counter}}]" type="checkbox" value=2>
+									<input id="q{{forloop.counter}}2" name="ans[{{forloop.counter}}]" type="checkbox" value=2 required>
 									<span class="checkmark"></span>
 								</div>
 								
@@ -47,24 +82,39 @@
 							<div class="select-container">
 								<label>{{i.ans3}}</label>
 								<div>
-									<input id="q{{forloop.counter}}3" name="ans[{{forloop.counter}}]" type="checkbox" value=3>
+									<input id="q{{forloop.counter}}3" name="ans[{{forloop.counter}}]" type="checkbox" value=3 required>
 									<span class="checkmark"></span>
 								</div>
 								
 							</div>
 							
 						</div>
+						{% if i.ans4 %}
 						<div class="col-12 mb-1">
 							<div class="select-container">
 								<label>{{i.ans4}}</label>
 								<div>
-									<input id="q{{forloop.counter}}4" name="ans[{{forloop.counter}}]" type="checkbox" value=4>
+									<input id="q{{forloop.counter}}4" name="ans[{{forloop.counter}}]" type="checkbox" value=4 required>
 									<span class="checkmark"></span>
 								</div>
 								
 							</div>
 							
 						</div>
+						{% endif %}
+						{% if i.ans5 %}
+						<div class="col-12 mb-1">
+							<div class="select-container">
+								<label>{{i.ans5}}</label>
+								<div>
+									<input id="q{{forloop.counter}}5" name="ans[{{forloop.counter}}]" type="checkbox" value=5 required>
+									<span class="checkmark"></span>
+								</div>
+								
+							</div>
+							
+						</div>
+						{% endif %}
 					</div>
 				</div>
 					
@@ -73,9 +123,17 @@
 		</div>
 	
 		{% endfor %}
+		
+		<div style="width:100%;display: flex;justify-content: center;margin-top: 30px;">
 		{% if not score %}
-		<button type="submit">Comfirm</button>
+			<button type="submit" class="create-quiz-btn" style="width:100px;height: 40px;text-align: center;border-radius: 5px;">Comfirm</button>
+		{% else %}
+			<button type="button" id="reanswerBtn" class="create-quiz-btn">Reanswer</button>
 		{% endif %}
+		</div>
+
+		
+
 		</form>
 	</div>
 	
@@ -83,7 +141,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-{% if score %}
+
+
+{% if score >= 0 %}
 <script type="text/javascript">
 var correctans = {{correctans}}
 var userans = {{userans}}
@@ -116,16 +176,54 @@ for (var i=0 ; i < correctkeys.length ; i++){
 	}
 }
 
+var reanswerBtn = document.getElementById('reanswerBtn')
+var cross = document.getElementById('cross')
 
+reanswerBtn.addEventListener('click', ()=>{
+	document.getElementById('notic').classList.add('active')
+})
+
+cross.addEventListener('click', ()=>{
+	document.getElementById('notic').classList.remove('active')
+})
+
+var okreanswer = document.getElementById('okreanswer')
+okreanswer.addEventListener('click', function(){
+	console.log('cli')
+		var action = this.dataset.action 
+		var url = '{% url 'questions:reanswer' %}'
+		var slug = '{{gpansed.slug}}'
+		fetch(url , {
+			method:'POST',
+			headers:{
+				'Content-Type':'application/json',
+				'X-CSRFToken': csrftoken,
+			},
+			body:JSON.stringify({'action' : action,'slug':slug})
+		})
+
+		.then((response) => {
+			return response.json()
+		})
+
+		.then((data) => {
+			location.reload();
+
+			
+			
+		})
+
+})
 
 </script>
+
+
 {% endif %}
 
+
+
+
 <script>
-
-
-
-
 
 $("input:checkbox").on('click', function() {
   // in the handler, 'this' refers to the box clicked on
@@ -137,9 +235,11 @@ $("input:checkbox").on('click', function() {
     // the checked state of the group/box on the other hand will change
     // and the current value is retrieved using .prop() method
     $(group).prop("checked", false);
+    $(group).prop("required", false);
     $box.prop("checked", true);
   } else {
     $box.prop("checked", false);
+
   }
 });
 

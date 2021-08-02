@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center p-2">Add Your Quiz</h2>
+<div class="addContainer">
+	<form method="POST">
+		{% csrf_token %}
+		<div style="width:100%;">
+			<label class="mb-1">Category</label>
+			<select name="category" class="form-control mb-2">
+				{% for i in ct %}
+				<option value="{{i.id}}" >{{i.ct_name}}</option>
+				{% endfor %}
+			</select>
+			<input type="text" name="gp_name" placeholder="Question Title" class="form-control mb-2">
+		</div>
+		
+		
+
+
+
+		<div class="questions" id="questions">
+			
+		</div>
+
+
+		<div class="create-container">
+			<button id="addquestion" type="button"><i class="fas fa-plus"></i> Q</button>
+			<button type="submit">Comfirm</button>
+		</div>
+		
+		<input type="hidden" name="counter" id="counter">
+		
+
+	</form>
+</div>
+
+<script type="text/javascript">
+	var addBtn = document.getElementById('addquestion')
+	const questions = document.getElementById('questions')
+	var counter = document.getElementById('counter')
+	
+	
+	var c = 0;
+	addBtn.addEventListener('click',()=>{
+		counter.value = c;
+		var html = `<div class='qt-container'>
+				<h3>Question ${c+1}</h3>
+				<textarea name="question${c}" placeholder="Question" class='mb-2 form-control'></textarea>
+				<select name="answer${c}" class='mb-2 form-control'>
+					<option value=0 >Correct Answer</option>
+					<option value=1 >1</option>
+					<option value=2 >2</option>
+					<option value=3 >3</option>
+					<option value=4 >4</option>
+					<option value=5 >5</option>
+				</select>
+				<input type="text" name="ans1${c}" placeholder="Choice1 *" class='mb-2 form-control'>
+				<input type="text" name="ans2${c}" placeholder="Choice2 *" class='mb-2 form-control'>
+				<input type="text" name="ans3${c}" placeholder="Choice3" class='mb-2 form-control'>
+				<input type="text" name="ans4${c}" placeholder="Choice4" class='mb-2 form-control'>
+				<input type="text" name="ans5${c}" placeholder="Choice5" class='mb-2 form-control'>
+			</div>`
+		questions.insertAdjacentHTML('beforeend', html);
+		c += 1;
+	})
+</script>
+{% endblock %}
