@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-p+pc=turrl%xml_53rd=a0h#*2rd-dcfm60y(^jtf!kqrm!qp*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ['quizdemo-bykosi.herokuapp.com']
+ALLOWED_HOSTS = ['quizdemo-bykosi.herokuapp.com']
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
@@ -147,4 +147,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
