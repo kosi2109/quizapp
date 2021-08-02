@@ -35,34 +35,29 @@ def group(request,slug):
 		for i in useranss:
 			userans[coA] = i.answer
 			coA += 1
-
-		print(correctans)
-		print(userans)
-		# for i in range(len(correctans)):
-		# 	if correctans[i] == userans[i]:
-		# 		print(correctans[i])
-		# 	else:
-		# 		print(correctans[i] , userans[i])
-
 		score = gpansed.point
-
+		ctx={'questions':questions,'scoreurl':scoreurl,'score':score,'correctans':correctans ,'userans':userans}
+		return render(request, 'group.html',ctx)
 	user = request.user.answerer
-	usergp = UserGpPoint.objects.get(answerer=user,gp=gp)
+	
 	
 	
 	if request.method == "POST":
-		cont = 1
+		usergp = UserGpPoint.objects.create(answerer=user,gp=gp)
+		cont = 0
 		for i in questions:
 			qans = i.answer
+			cont += 1
 			ans = request.POST.get('ans['+str(cont)+']')
+			print(cont,'ct')
+			print(ans)
 			UserAnswer.objects.create(point=usergp,question=i,answer=ans)
 			if int(qans) == int(ans):
 				usergp.point += 1
-				cont += 1
 				usergp.save()
 		return redirect('http://127.0.0.1:8000/score/'+scoreurl)
 
-	ctx={'questions':questions,'scoreurl':scoreurl,'score':score,'correctans':correctans ,'userans':userans}
+	ctx={'questions':questions,'scoreurl':scoreurl}
 	return render(request, 'group.html',ctx)
 
 

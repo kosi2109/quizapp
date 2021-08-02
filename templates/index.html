@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container-fluid">
 	<div class="mb-3 btn-container">
 		<div class="dropdown-container">
 			<button id='dowpdown-btn'>All</button>
@@ -10,12 +11,14 @@
 				{% endfor %}
 			</ul>
 		</div>
-		
+		<div>
+			<button class="create-quiz-btn">Create Quiz</button>
+		</div>
 	</div>
-	<div class="container-fluid">
+	
 		<div class="row">
 			{% for i in gp %}
-			<div class="col-12 px-5 mb-3">
+			<div class="col-md-6 col-12 px-5 mb-3">
 				<div class="gp-container shadow">
 					{{i}}
 					<a href="{% url 'questions:group' i.gp_slug %}">Try</a>
@@ -24,7 +27,7 @@
 			</div>
 			{% endfor %}
 		</div>
-	</div>
+</div>
 	
 <script type="text/javascript">
 	var btn = document.querySelector('#dowpdown-btn')

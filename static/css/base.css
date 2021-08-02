@@ -18,7 +18,7 @@ body{
 }
 
 .gp-container{
-	width: 100%;
+	width: 100% !important;
 	padding: 20px;
 	background: rgba(248, 245, 245, 1);
 	display: flex;
@@ -26,18 +26,31 @@ body{
 	align-items: center;
 	flex-direction: column;
 	border-radius: 10px;
+	min-height: 100px;
+}
+
+.gp-container a{
+	text-decoration: none;
 }
 
 .btn-container{
-	height: 50px;
+	height: 80px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
-	padding-top: 10px;
+	padding: 10px;
+	width: 100%;
+}
+
+.create-quiz-btn{
+	background-color: rgba(255, 255, 255, 1) !important;
+	color: rgba(97, 144, 232, 1.0) !important;
+	border: 2px solid rgba(97, 144, 232, 1.0) !important;
+	font-weight: 30px;
 }
 .btn-container button{
-	width: 100px;
-	height: 40px;
+	width: 150px;
+	height: 50px;
 	background: transparent;
 	border: 2px solid rgba(255, 255, 255, 1);
 	border-radius: 5px;
@@ -200,11 +213,16 @@ input[type='checkbox']:checked:after{
 	display: block;
 }
 
-.wrong:after{
+.wrong{
 	background-color: red !important;
 }
 
-.correct:after{
+.wrong:after{
+	content: '\f00d' !important;
+	
+}
+
+.correct{
 	background-color: green !important;
 }
 
@@ -212,9 +230,17 @@ input[type='checkbox']:checked:after{
 	.select-container{
 		padding: 0 60px;
 	}
+	.btn-container{
+		width: 50%;
+		transform: translateX(50%);
+	}
+	.question-container{
+		width: 50%;
+		transform: translateX(50%);
+	}
 }
 
-@media screen and (min-width: 720px){
+@media screen and (min-width: 1080px){
 	.question-container{
 		padding: 20px 60px;
 	}

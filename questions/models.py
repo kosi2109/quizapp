@@ -26,8 +26,10 @@ class QuestionGp(models.Model):
 	def save(self,*args, **kwargs):
 		if not self.gp_slug:
 			ct = self.category.ct_name
+			ctl = ct.replace(" ","")
+			print(ctl)
 			uid = uuid.uuid4().hex[:5]
-			self.gp_slug = f'{ct}-{uid}'
+			self.gp_slug = f'{ctl}_{uid}'
 
 		super().save(*args, **kwargs) 
 
