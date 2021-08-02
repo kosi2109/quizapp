@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if score %}
+<h2 class="text-center p-3 answered">You have already answered this quiz !</h2>
+<h4 class="text-center scoretext">Your score is <span class="score">{{score}}</span></h4>
+{% endif %}
+<div class="container-fluid m-0">
+	<div class="row p-3 m-0" style="width: 100% !important;">
+		
+		<form method="POST">
+		{% csrf_token %}
+		{% for i in questions %}
+		<div class="col-12 mb-3">
+			<div class="question-container mb-3 shadow">
+				
+				<p>{{i.question}}</p>
+				<div class="choice-container pt-3" id="ans-{{forloop.counter}}">
+				<div class="container">
+						
+					
+					<div class="row" style="height: 100%;">
+						<div class="col-12 mb-1">
+							<div class="select-container" >
+								<label>{{i.ans1}}</label>
+								<div>
+									<input id="q{{forloop.counter}}1" name="ans[{{forloop.counter}}]" type="checkbox" value=1>
+									<span class="checkmark"></span>
+								</div>
+								
+								
+							</div>
+						</div>
+						<div class="col-12 mb-1">
+							<div class="select-container">
+								<label>{{i.ans2}}</label>
+								<div>
+									<input id="q{{forloop.counter}}2" name="ans[{{forloop.counter}}]" type="checkbox" value=2>
+									<span class="checkmark"></span>
+								</div>
+								
+							</div>
+							
+						</div>
+						<div class="col-12 mb-1">
+							<div class="select-container">
+								<label>{{i.ans3}}</label>
+								<div>
+									<input id="q{{forloop.counter}}3" name="ans[{{forloop.counter}}]" type="checkbox" value=3>
+									<span class="checkmark"></span>
+								</div>
+								
+							</div>
+							
+						</div>
+						<div class="col-12 mb-1">
+							<div class="select-container">
+								<label>{{i.ans4}}</label>
+								<div>
+									<input id="q{{forloop.counter}}4" name="ans[{{forloop.counter}}]" type="checkbox" value="4">
+									<span class="checkmark"></span>
+								</div>
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+					
+			</div>
+			
+		</div>
+	
+		{% endfor %}
+		{% if not score %}
+		<button type="submit">Comfirm</button>
+		{% endif %}
+		</form>
+	</div>
+	
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+{% if score %}
+<script type="text/javascript">
+var correctans = {{correctans}}
+var userans = {{userans}}
+
+var correctkeys = Object.keys( correctans );
+var anskeys = Object.keys( userans );
+var correctvalues = Object.values( correctans );
+var ansvalues = Object.values( userans );
+
+for (var i=0 ; i < correctkeys.length ; i++){
+	if (correctvalues[i] == ansvalues[i]){
+		var id = 'q'+correctkeys[i]+ansvalues[i]
+		document.getElementById(id).checked = true ;
+	}else{
+		var id = 'q'+correctkeys[i]+correctvalues[i]
+		document.getElementById(id).classList.add('correct')
+		document.getElementById(id).checked = true ;
+
+		var id = 'q'+anskeys[i]+ansvalues[i]
+		document.getElementById(id).classList.add('wrong')
+		document.getElementById(id).checked = true ;
+
+	}
+}
+
+
+
+</script>
+{% endif %}
+
+<script>
+
+
+
+
+
+$("input:checkbox").on('click', function() {
+  // in the handler, 'this' refers to the box clicked on
+  var $box = $(this);
+  if ($box.is(":checked")) {
+    // the name of the box is retrieved using the .attr() method
+    // as it is assumed and expected to be immutable
+    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+    // the checked state of the group/box on the other hand will change
+    // and the current value is retrieved using .prop() method
+    $(group).prop("checked", false);
+    $box.prop("checked", true);
+  } else {
+    $box.prop("checked", false);
+  }
+});
+
+
+</script>
+
+{% endblock %}

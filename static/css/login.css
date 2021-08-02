@@ -1,0 +1,83 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+h1{
+	color: #fafafa;
+}
+
+body{
+	background: linear-gradient(11.53deg, rgba(68, 160, 141, 0.86) 12.08%, rgba(97, 144, 232, 0.87) 90.38%);
+	min-height: 100vh;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+	padding: 20px;
+}
+
+form{
+	width: 80%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+}
+
+input{
+	height: 1.9rem;
+	width: 80%;
+	margin: 20px 0;
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	overflow: hidden;
+	background: rgba(240, 240, 240, 1);
+	padding: 0 10px;
+	transition: all 0.5s ease;
+}
+
+button{
+	width: 70px;
+	height: 30px;
+	border-radius: 5px;
+	color: #252525;
+	border: none;
+	cursor: pointer;
+	background: rgba(240, 240, 240, 1);
+	font-size: 0.8rem;
+}
+
+input:focus{
+
+	width: 83%;
+	height: 2.4rem;
+	border-radius: 5px;
+	transform: translateY(-10px);
+	transition: all 0.5s ease;
+	box-shadow: 0.5px 0.5px 5px #252525;
+}
+
+button:hover{
+	box-shadow: 0.5px 0.5px 5px #252525;
+}
+
+@media screen and (min-width: 720px){
+	input{
+		width: 50%;
+	}
+	input:focus{
+		width: 53%;
+	}
+}
+
+@media screen and (min-width: 1280px){
+	input{
+		width: 40%;
+	}
+	input:focus{
+		width: 43%;
+	}
+}

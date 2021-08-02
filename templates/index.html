@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="mb-3 btn-container">
+		<div class="dropdown-container">
+			<button id='dowpdown-btn'>All</button>
+			<ul class="dropdown-content shadow">
+				{% for i in ct %}
+				<li><a href="{% url 'questions:ctView' i.ct_slug %}">{{i.ct_name}}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+		
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			{% for i in gp %}
+			<div class="col-12 px-5 mb-3">
+				<div class="gp-container shadow">
+					{{i}}
+					<a href="{% url 'questions:group' i.gp_slug %}">Try</a>
+				</div>
+				
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	
+<script type="text/javascript">
+	var btn = document.querySelector('#dowpdown-btn')
+	var dropdown = document.querySelector('.dropdown-content')
+	btn.addEventListener('click', ()=>{
+		dropdown.classList.toggle('toggle')
+	})
+</script>		
+
+
+{% endblock %}

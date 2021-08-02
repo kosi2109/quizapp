@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+		<div class="gotScore">
+			<h1>Congratulation!! <br> You got {{gp.point}}/{{total}} Marks</h1>
+			<a class="goHome" href="{% url 'questions:home' %}">Home</a>
+		</div>
+		
+
+{% endblock %}
