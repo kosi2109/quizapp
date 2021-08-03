@@ -1,0 +1,19 @@
+<div class="mb-3 btn-container">
+		<div class="dropdown-container">
+			<button id='dowpdown-btn'>{% if cct %}{{cct.ct_name}} <i class="fas fa-caret-down"></i>{% else %} All <i class="fas fa-caret-down"></i>{% endif %}</button>
+			<ul class="dropdown-content shadow">
+				<li><a href="{% url 'questions:home' %}">All</a></li>
+				{% for i in ct %}
+				<li><a href="{% url 'questions:ctView' i.ct_slug %}">{{i.ct_name}}</a></li>
+				{% endfor %}
+				<li><a href="{% url 'questions:userLogout' %}">Log Out</a></li>
+				
+			</ul>
+		</div>
+		<div>
+			<button class="create-quiz-btn"><a href="{% url 'questions:createQuiz' %}">Create Quiz</a> </button>
+		</div>
+		<div>
+			<button class="create-quiz-btn"><a href="{% url 'questions:myquizView' %}">My Quizzes</a> </button>
+		</div>
+</div>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+	<title>Login</title>
+</head>
+<body>
+	<h1>Answer The Questions</h1>
+	<form method="POST">
+		{% csrf_token %}
+		
+		{{form.username}}
+		
+		{{form.email}}
+		
+		{{form.password1}}
+		
+		{{form.password2}}
+		<button type="submit">Signup</button>
+		<a href="{% url 'questions:userLogin' %}" style="margin-top: 10px;color: #fafafa;margin-bottom: 10px;">Already have an account?</a>
+		<p>{{messages}}</p>
+	</form>
+
+
+<script type="text/javascript">
+	var password = document.getElementById('id_password1')
+	var password2 = document.getElementById('id_password2')
+	password.placeholder = 'Password'
+	password2.placeholder = 'Comfirm Password'
+</script>
+</body>
+</html>

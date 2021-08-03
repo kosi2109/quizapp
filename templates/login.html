@@ -10,10 +10,13 @@
 </head>
 <body>
 	<h1>Answer The Questions</h1>
-	<form>
+	<form method="POST">
+		{% csrf_token %}
 		<input type="text" name="username" placeholder="Username">
 		<input type="password" name="password" placeholder="Password">
 		<button type="submit">Login</button>
+		<a href="{% url 'questions:registerPage' %}" style="margin-top: 10px;color: #fafafa;margin-bottom: 10px;">Signup</a>
+		<p>{{messages}}</p>
 	</form>
 
 </body>

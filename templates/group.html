@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<script type="text/javascript">
-    
+
+<!-- cookies -->
+<script type="text/javascript">   
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -20,14 +21,12 @@
     }
     const csrftoken = getCookie('csrftoken');
     
-  </script>
+ </script>
 
 
 <h2 class="text-center p-3 answered">{{gp.gp_name}} <br> (Upload by {{gp.created_by}})</h2>
 
-{% if request.user.answerer == gp.created_by %}
-	Edit
-{% endif %}
+
 
 {% if score >= 0 %}
 <h2 class="text-center p-3 answered">You have already answered this quiz !</h2>
@@ -44,7 +43,7 @@
 <div class="container-fluid m-0">
 	<div class="row p-3 m-0" style="width: 100% !important;">
 		
-		<form method="POST">
+		<form method="POST" >
 		{% csrf_token %}
 		{% for i in questions %}
 		<div class="col-12 mb-3">
@@ -78,6 +77,7 @@
 							</div>
 							
 						</div>
+						{% if i.ans3 %}
 						<div class="col-12 mb-1">
 							<div class="select-container">
 								<label>{{i.ans3}}</label>
@@ -89,6 +89,7 @@
 							</div>
 							
 						</div>
+						{% endif %}
 						{% if i.ans4 %}
 						<div class="col-12 mb-1">
 							<div class="select-container">
@@ -124,7 +125,11 @@
 	
 		{% endfor %}
 		
-		<div style="width:100%;display: flex;justify-content: center;margin-top: 30px;">
+		<div class="gpBtn">
+		{% if request.user.answerer == gp.created_by %}
+			<button type="button" class="create-quiz-btn"><a href="{% url 'questions:edit' gp.gp_slug %}">Edit</a></button>
+			
+		{% endif %}
 		{% if not score %}
 			<button type="submit" class="create-quiz-btn" style="width:100px;height: 40px;text-align: center;border-radius: 5px;">Comfirm</button>
 		{% else %}
@@ -152,7 +157,6 @@ var correctkeys = Object.keys( correctans );
 var anskeys = Object.keys( userans );
 var correctvalues = Object.values( correctans );
 var ansvalues = Object.values( userans );
-
 var allcheckbox = document.querySelectorAll("input[type='checkbox']")
 
 allcheckbox.forEach(e =>{
@@ -165,13 +169,16 @@ for (var i=0 ; i < correctkeys.length ; i++){
 		document.getElementById(id).checked = true ;
 	
 	}else{
-		var id = 'q'+correctkeys[i]+correctvalues[i]
-		document.getElementById(id).classList.add('correct')
-		document.getElementById(id).checked = true ;
+		var coid = 'q'+correctkeys[i]+correctvalues[i]
+		document.getElementById(coid).classList.add('correct')
+		document.getElementById(coid).checked = true ;
 
-		var id = 'q'+anskeys[i]+ansvalues[i]
-		document.getElementById(id).classList.add('wrong')
-		document.getElementById(id).checked = true ;
+		if (ansvalues[i] != null){
+			var wrid = 'q'+anskeys[i]+ansvalues[i]
+			document.getElementById(wrid).classList.add('wrong')
+			document.getElementById(wrid).checked = true ;
+		}
+		
 
 	}
 }
@@ -189,7 +196,6 @@ cross.addEventListener('click', ()=>{
 
 var okreanswer = document.getElementById('okreanswer')
 okreanswer.addEventListener('click', function(){
-	console.log('cli')
 		var action = this.dataset.action 
 		var url = '{% url 'questions:reanswer' %}'
 		var slug = '{{gpansed.slug}}'

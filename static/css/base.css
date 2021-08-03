@@ -6,7 +6,6 @@
 }
 
 
-
 body{
 	position: relative;
 	width: 100vw;
@@ -45,22 +44,14 @@ body{
 	width: 100%;
 }
 
-.create-quiz-btn{
-	background-color: rgba(255, 255, 255, 1) !important;
-	color: rgba(97, 144, 232, 1.0) !important;
-	border: 2px solid rgba(97, 144, 232, 1.0) !important;
-	font-weight: 30px;
-	width: 80px;
-	height: 40px;
-	border-radius: 5px;
-}
 .btn-container button{
-	width: 150px;
-	height: 50px;
+	width: 100px;
+	height: 45px;
 	background: transparent;
 	border: 2px solid rgba(255, 255, 255, 1);
 	border-radius: 5px;
 	color: rgba(255, 255, 255, 1);
+	font-size: 0.7rem;
 }
 
 .question-container{
@@ -117,6 +108,7 @@ label{
 
 .dropdown-container{
 	position: relative;
+
 }
 
 .dowpdown-btn{
@@ -127,9 +119,8 @@ label{
 	position: absolute;
 	background: rgba(97, 144, 232, 1.0);
 	padding: 10px;
-	width: 150%;
+	width: 15rem;
 	list-style: none;
-	left: -25%;
 	align-items: center;
 	flex-direction: column;
 	border-radius: 5px;
@@ -149,6 +140,7 @@ label{
 .dropdown-content a{
 	text-decoration: none;
 	color: rgb(255, 255, 255);
+	font-size: 0.7rem;
 }
 
 .gotScore{
@@ -257,6 +249,26 @@ input[type='checkbox']:checked:after{
 	align-items: center;
 	justify-content: space-around;
 }
+.gpBtn{
+	justify-content: space-around;
+	display: flex;
+	align-items: center;
+}
+.gpBtn button{
+	width: 100px !important;
+	height: 40px !important;
+	border-radius: 5px !important;
+	border: none;
+	background-color: #fafafa;
+	color: #252525 !important;
+	box-shadow: 0.5px 0.5px 5px #252525;
+
+}
+
+.gpBtn button a{
+	color: #252525 !important;
+	font-weight: normal;
+}
 
 .create-container{
 	width: 100%;
@@ -278,7 +290,7 @@ input[type='checkbox']:checked:after{
 
 .create-quiz-btn a{
 	text-decoration: none;
-	color: rgba(68, 160, 141, 1.0);
+	color: rgba(255, 255, 255, 1);
 	font-weight: bold;
 	letter-spacing: 1px;
 }
@@ -337,7 +349,7 @@ input[type='checkbox']:checked:after{
 		padding: 0 60px;
 	}
 	.btn-container{
-		width: 35%;
+		width: 50%;
 	}
 	.question-container{
 		width: 50%;
@@ -345,6 +357,19 @@ input[type='checkbox']:checked:after{
 	}
 	.addContainer form{
 		width: 50%;
+	}
+	.gpBtn{
+		width: 50%;
+		transform: translateX(50%);
+	}
+	.btn-container button{
+		font-size: 0.8rem;
+	}
+	.btn-container button a{
+		font-weight: normal;
+	}
+	.dropdown-content a{
+		font-size: 0.8rem;
 	}
 }
 
@@ -354,6 +379,12 @@ input[type='checkbox']:checked:after{
 	}
 	.select-container{
 		padding: 0 30%;
+	}
+	.btn-container button{
+		font-size: 0.9rem;
+	}
+	.dropdown-content a{
+		font-size: 0.9rem;
 	}
 }
 }

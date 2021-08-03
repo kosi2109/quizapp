@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="addContainer">
+	<form method="POST">
+		{% csrf_token %}
+		<div class="questions" id="questions">
+		<div class='qt-container'>
+			<textarea name="question" placeholder="Question" class='mb-2 form-control'>{{question.question}}</textarea>
+			<select name="answer" class='mb-2 form-control'>
+				<option value={{question.answer}} >Current {{question.answer}}</option>
+				<option value=1 >1</option>
+				<option value=2 >2</option>
+				<option value=3 >3</option>
+				<option value=4 >4</option>
+				<option value=5 >5</option>
+			</select>
+			<input value="{{question.ans1}}" type="text" name="ans1" placeholder="Choice1 *" class='mb-2 form-control'>
+			<input value="{{question.ans2}}" type="text" name="ans2" placeholder="Choice2 *" class='mb-2 form-control'>
+			<input value="{{question.ans3}}" type="text" name="ans3" placeholder="Choice3" class='mb-2 form-control'>
+			<input value="{{question.ans4}}" type="text" name="ans4" placeholder="Choice4" class='mb-2 form-control'>
+			<input value="{{question.ans5}}" type="text" name="ans5" placeholder="Choice5" class='mb-2 form-control'>
+		</div>			
+		</div>
+		<div class="create-container">
+			<button type="submit">Comfirm</button>
+			<a href="{% url 'questions:deletequestion' question.qt_slug %}" style="color: #fafafa;">Delete Question</a>
+		</div>
+	</form>
+</div>
+{% endblock %}

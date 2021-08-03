@@ -2,19 +2,7 @@
 
 {% block content %}
 <div class="container-fluid">
-	<div class="mb-3 btn-container">
-		<div class="dropdown-container">
-			<button id='dowpdown-btn'>All</button>
-			<ul class="dropdown-content shadow">
-				{% for i in ct %}
-				<li><a href="{% url 'questions:ctView' i.ct_slug %}">{{i.ct_name}}</a></li>
-				{% endfor %}
-			</ul>
-		</div>
-		<div>
-			<button class="create-quiz-btn"><a href="{% url 'questions:createQuiz' %}">Create Quiz</a> </button>
-		</div>
-	</div>
+	{% include 'btn.html' %}
 	
 		<div class="row">
 			{% for i in gp %}

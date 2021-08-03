@@ -58,12 +58,11 @@ class Question(models.Model):
 
 	def save(self,*args, **kwargs):
 		if not self.qt_slug:
-			gp = self.gp.gp_name
 			uid = uuid.uuid4().hex[:5]
-			self.qt_slug = f'{gp}-{uid}'
+			self.qt_slug = f'q-{uid}'
 			while Question.objects.filter(qt_slug=self.qt_slug).exists():
 				uid = uuid.uuid4().hex[:5]
-				self.qt_slug = f'{gp}-{uid}'
+				self.qt_slug = f'q-{uid}'
 		super().save(*args, **kwargs)
 
 
@@ -81,7 +80,11 @@ class UserGpPoint(models.Model):
 
 	def save(self,*args, **kwargs):
 		if not self.slug:
-			self.slug = f'ans-{self.gp.gp_slug}' 
+			uid = uuid.uuid4().hex[:5]
+			self.slug = f'ans_{self.gp.gp_slug}_{uid}'
+			while UserGpPoint.objects.filter(slug=self.slug).exists():
+				uid = uuid.uuid4().hex[:5]
+				self.slug = f'ans_{self.gp.gp_slug}_{uid}'
 		super().save(*args, **kwargs)
 
 	def __str__(self):
@@ -92,7 +95,7 @@ class UserGpPoint(models.Model):
 
 class UserAnswer(models.Model):
 	point = models.ForeignKey(UserGpPoint,on_delete=models.CASCADE)
-	question = models.OneToOneField(Question, on_delete=models.CASCADE)
+	question = models.ForeignKey(Question, on_delete=models.CASCADE)
 	answer = models.IntegerField(null=True)
 	
 
