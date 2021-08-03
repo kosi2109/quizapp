@@ -16,7 +16,9 @@
 		<input type="password" name="password" placeholder="Password">
 		<button type="submit">Login</button>
 		<a href="{% url 'questions:registerPage' %}" style="margin-top: 10px;color: #fafafa;margin-bottom: 10px;">Signup</a>
-		<p>{{messages}}</p>
+		{% for message in messages %}
+           <p style="color: #fafafa;">{{message}}</p>
+        {% endfor %}
 	</form>
 
 </body>

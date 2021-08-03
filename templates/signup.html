@@ -22,7 +22,9 @@
 		{{form.password2}}
 		<button type="submit">Signup</button>
 		<a href="{% url 'questions:userLogin' %}" style="margin-top: 10px;color: #fafafa;margin-bottom: 10px;">Already have an account?</a>
-		<p>{{messages}}</p>
+		{% for message in messages %}
+           <p style="color: #fafafa;">{{message}}</p>
+        {% endfor %}
 	</form>
 
 
