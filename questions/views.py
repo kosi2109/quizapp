@@ -190,7 +190,7 @@ def createQuiz(request):
 				ans4=ans4,
 				ans5=ans5
 				)
-			return redirect('questions:home')
+		return redirect('questions:home')
 
 	ctx={'ct':ct}
 	return render(request, 'createQuiz.html',ctx)
