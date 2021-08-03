@@ -2,9 +2,9 @@
 
 {% block content %}
 	<div style="width:100vw;height: 100vh;display: flex;justify-content: center;align-items: center;">
-		<form method="POST" style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+		<form method="POST" style="display: flex;justify-content: center;align-items: center;flex-direction: column;padding: 0 1rem;">
 			{% csrf_token %}
-			<h1 class="text-light">Are You Sure to delete "{{item}}"</h1>
+			<h1 class="text-light text-center">Are You Sure to delete "{{item}}"</h1>
 			
 
 			<button class="btn btn-md btn-danger" type="submit">Delete</button>
